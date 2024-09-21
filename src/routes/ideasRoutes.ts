@@ -1,10 +1,11 @@
 import express from "express";
-import {postIdea,getAllIdeas} from '../controller/ideaController';
+import {postIdea, getLatestIdeas, getOldestIdeas} from '../controller/ideaController';
 
 export const routes = express.Router();
 
 routes.post('/post',postIdea);
 
-routes.get('/ideas',getAllIdeas);
+routes.get('/ideas/latest',getLatestIdeas);
+routes.get('/ideas/oldest',getOldestIdeas);
 
 
