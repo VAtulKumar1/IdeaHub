@@ -3,7 +3,9 @@ import {
     postIdea, 
     getLatestIdeas, 
     getOldestIdeas, 
-    likeAnIdea
+    likeAnIdea,
+    getPopularIdeas,
+    findARandomIdea
 
 } from '../controller/ideaController';
 
@@ -14,5 +16,7 @@ routes.post('/post',postIdea);
 routes.get('/ideas/latest',getLatestIdeas);
 routes.get('/ideas/oldest',getOldestIdeas);
 routes.patch('/like',likeAnIdea);
+routes.get('/popular',getPopularIdeas);
+routes.get('/random',findARandomIdea);
 
 

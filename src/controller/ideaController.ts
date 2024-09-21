@@ -61,3 +61,27 @@ export const likeAnIdea = async (req: Request,res:Response)=>{
     }
 
 }
+
+
+export const getPopularIdeas = async (req: Request,res:Response)=>{
+    try{
+        const ideas = await Idea.find().sort({likes: -1});
+        res.status(201).json(ideas);
+
+    }catch(error){
+        console.log("some error occured")
+    }
+
+}
+
+
+export const findARandomIdea = async (req: Request,res:Response)=>{
+    try{
+        const idea = await Idea.aggregate().sample(1);
+        res.status(201).json(idea);
+
+    }catch(error){
+        console.log("some error occured")
+    }
+
+}
