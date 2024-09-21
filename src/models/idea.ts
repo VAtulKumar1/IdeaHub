@@ -8,4 +8,8 @@ const ideaSchema  = new mongoose.Schema({
     industry: String
 })
 
-export default ideaSchema;
+const Idea  = mongoose.model("Idea",ideaSchema); 
+
+
+export default Idea;
+
