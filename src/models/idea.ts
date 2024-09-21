@@ -6,7 +6,8 @@ const ideaSchema  = new mongoose.Schema({
     description: String,
     tag: String,
     industry: String,
-    createdAt: Date
+    createdAt: Date,
+    likes : Number 
 })
 
 const Idea  = mongoose.model("Idea",ideaSchema); 

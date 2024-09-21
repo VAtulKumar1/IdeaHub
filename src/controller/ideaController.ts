@@ -8,7 +8,12 @@ export const postIdea= async (req :Request , res: Response)=>{
     try{
         const {title,description,tag,industry,createdAt} = req.body;
         const idea = new Idea({
-            title,description,tag,industry,createdAt
+            title,
+            description,
+            tag,
+            industry,
+            createdAt,
+            likes:0
         })
         await idea.save();
         res.status(201).json(idea);
@@ -41,6 +46,18 @@ export const getOldestIdeas = async (req:Request,res:Response) => {
     }
     catch(error){
         res.status(400).send("some error occured");
+    }
+
+}
+
+export const likeAnIdea = async (req: Request,res:Response)=>{
+    try{
+        const id = req.body.id;
+        const idea = await Idea.findByIdAndUpdate(id,{ $inc : {likes : 1}});
+        res.status(201).json(idea);
+
+    }catch(error){
+        console.log("some error occured")
     }
 
 }
