@@ -5,18 +5,22 @@ import {
     getOldestIdeas, 
     likeAnIdea,
     getPopularIdeas,
-    findARandomIdea
+    findARandomIdea,
+    register,
+    login
 
 } from '../controller/ideaController';
+import authorize from "../auth/authorize";
 
 export const routes = express.Router();
 
-routes.post('/post',postIdea);
+routes.post('/post',authorize,postIdea);
 
-routes.get('/ideas/latest',getLatestIdeas);
-routes.get('/ideas/oldest',getOldestIdeas);
-routes.patch('/like',likeAnIdea);
-routes.get('/popular',getPopularIdeas);
-routes.get('/random',findARandomIdea);
-
+routes.get('/ideas/latest',authorize,getLatestIdeas);
+routes.get('/ideas/oldest',authorize,getOldestIdeas);
+routes.patch('/like',authorize,likeAnIdea);
+routes.get('/ideas/popular',authorize,getPopularIdeas);
+routes.get('/random',authorize,findARandomIdea);
+routes.post('/register',register);
+routes.post('/login',login);
 
