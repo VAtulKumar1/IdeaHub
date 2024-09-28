@@ -5,9 +5,10 @@ import { routes } from './routes/ideasRoutes';
 import configurations from './config/getConfig';
 import cors from 'cors';
 
+
 const app = express();
 const port:string = configurations.port;
-app.use(bodyParser);
+app.use(bodyParser.json())
 
 
 const corsOptions = {

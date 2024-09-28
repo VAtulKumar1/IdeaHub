@@ -7,10 +7,10 @@ import {
     dislikeAnIdea,
     getPopularIdeas,
     findARandomIdea,
-    addAComment,
     deleteAnIdea,
     getAllCommentsOnAPost,
-    getCoversation
+    getCoversation,
+    addAComment
 
 } from '../controller/ideaController';
 import { login,refreshToken,register, updatePassword } from "../controller/userController";

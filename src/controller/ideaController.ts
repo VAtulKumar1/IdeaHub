@@ -112,12 +112,12 @@ export const findARandomIdea = async (req: Request,res:Response)=>{
 
 
 
-export const addAComment = async (req:Request,res:Response)=>{
+export const addAComment = async(req:Request,res:Response)=>{
     try{
         const request:CommentReqBody = req.body;
         const comment = new Comment(request);
         await comment.save();
-        return res.status(200).json(comment);
+        res.status(200).json(comment);
         
     }catch(error){
         res.status(500).json(error);
