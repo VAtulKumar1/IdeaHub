@@ -22,18 +22,16 @@ export const register = async (req:Request,res:Response)=>{
                 password: encryptedPassword
            })
         newUser.save();
-        console.log(newUser);
+
         const accessToken = generateToken(userName,email,"User");
-        console.log(accessToken);
+       
         const refereshToken = generateRefereshToken(userName,email,"User");
-        console.log(refereshToken);
+        
         const token = new Token({
             refrehToken:refereshToken,
             userId:newUser._id,
         });
         token.save();
-
-        console.log(`token${token}`);
 
 
         const response = {
@@ -89,8 +87,11 @@ export const login = async (req:Request,res:Response)=>{
 }
 
 export const refreshToken = async (req:Request,res:Response)=>{
-    const refreshToken = req.headers['Refresh-Token'];
-    const userId = req.params.id;
+  
+    const header = req.get('Refresh-Token');
+    const refreshToken = header && header.split(' ')[1];
+
+    const userId = req.params['id'];
 
     if(!(userId && refreshToken)){
         res.status(401).send("Please provide a valid refresh token")
@@ -111,5 +112,34 @@ export const refreshToken = async (req:Request,res:Response)=>{
     }else{
         res.status(401).send("Please login refresh Token expired");
     }
+
+}
+
+
+export const updatePassword = async (req:Request,res:Response)=>{
+    const userId = req.params['id'];
+    const {currentPassword,newPassword} = req.body;
+    if(!userId){
+        res.status(401).send("Please provide a valid userId");
+        return;
+    }
+
+    if(!(currentPassword && newPassword)){
+        res.status(401).send("both fields are mandatory");
+    }
+
+    const userExists = await User.findOne({_id:userId},'+password');
+
+    if(userExists && await bcrypt.compare(currentPassword,userExists?.password)){
+        userExists.password = currentPassword;
+        res.status(200).send('password updated successfully');
+        return;
+    }
+    else{
+        res.status(401).send("please provide a valid password");
+    }
+    
+
+
 
 }

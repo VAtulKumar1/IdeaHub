@@ -8,7 +8,7 @@ import {
     findARandomIdea
 
 } from '../controller/ideaController';
-import { login,register } from "../controller/userController";
+import { login,refreshToken,register, updatePassword } from "../controller/userController";
 import authorize from "../auth/authorize";
 
 export const routes = express.Router();
@@ -23,4 +23,6 @@ routes.get('/random',authorize,findARandomIdea);
 
 routes.post('/user/register',register);
 routes.post('/user/login',login);
+routes.post('/user/refresh/:id',refreshToken)
+routes.patch('/user/:id',updatePassword);
 
