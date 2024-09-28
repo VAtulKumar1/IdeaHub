@@ -13,7 +13,7 @@ const options : CustomConnectOptions = {
 
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb+srv://atulkumarverma304:N7BocL3Yy7c9DmKe@cluster0.ct27x.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', options);
+        await mongoose.connect(process.env.MONGO_URI as string, options);
         console.log("MongoDB connected successfully.");
     } catch (error) {
         if( error instanceof Error){

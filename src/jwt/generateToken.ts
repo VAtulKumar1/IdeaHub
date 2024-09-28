@@ -6,7 +6,7 @@ const generateToken = (userName:string)=>{
         userName : userName
     }
 
-    const secret = "mysecret";
+    const secret = process.env.TOKEN_SECRET_KEY as string;
     const options = {expiresIn:'6h'}
     return jwt.sign(payload,secret,options);
 }

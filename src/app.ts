@@ -5,7 +5,7 @@ import { routes } from './routes/ideasRoutes';
 import cors from 'cors';
 
 const app = express();
-const port : number = 3000;
+const port:string = process.env.PORT as string;
 app.use(bodyParser);
 
 
