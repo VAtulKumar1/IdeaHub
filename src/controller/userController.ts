@@ -12,6 +12,16 @@ interface RegisterReqBody{
     password:string 
 }
 
+interface LoginRequestBody{
+    email:string,
+    password:string 
+}
+
+interface UpdatePasswordRequest{
+    currentPassword:string,
+    newPassword:string
+}
+
 export const register = async (req:Request,res:Response)=>{
     const {userName,email,password}:RegisterReqBody = req.body;
     try{
@@ -57,7 +67,7 @@ export const register = async (req:Request,res:Response)=>{
 }
 
 export const login = async (req:Request,res:Response)=>{
-    const {email,password} = req.body;
+    const {email,password}:LoginRequestBody = req.body;
     try{
         if(!( email && password)){
             res.status(401).json({
@@ -98,6 +108,12 @@ export const refreshToken = async (req:Request,res:Response)=>{
     const header:string|undefined = req.get('Refresh-Token');
     const refreshToken:string|undefined = header && header.split(' ')[1];
 
+    if(typeof header === undefined || typeof refreshToken === undefined){
+        res.status(401).json({
+            message:"Invalid Request"
+        })
+    }
+
     const userId:string  = req.params['id'];
 
     if(!(userId && refreshToken)){
@@ -125,7 +141,7 @@ export const refreshToken = async (req:Request,res:Response)=>{
 
 export const updatePassword = async (req:Request,res:Response)=>{
     const userId:string = req.params['id'];
-    const {currentPassword,newPassword} = req.body;
+    const {currentPassword,newPassword}:UpdatePasswordRequest = req.body;
     if(!userId){
         res.status(401).send("Please provide a valid userId");
         return;

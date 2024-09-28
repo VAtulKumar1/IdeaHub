@@ -12,6 +12,14 @@ interface Idea {
 }
 
 
+interface CommentReqBody{
+    userName:string,
+    ideaId:string,
+    message:string,
+    parentId?:string
+}
+
+
 export const postIdea= async (req :Request , res: Response)=>{
 
     try{
@@ -54,7 +62,7 @@ export const getOldestIdeas = async (req:Request,res:Response) => {
 
 export const likeAnIdea = async (req: Request,res:Response)=>{
     try{
-        const id = req.query.id;
+        const id:string = req.params['ideaId'];
         const idea = await Idea.findByIdAndUpdate(id,{ $inc : {likes : 1}});
         res.status(201).json(idea);
 
@@ -64,9 +72,9 @@ export const likeAnIdea = async (req: Request,res:Response)=>{
 
 }
 
-export const disLikeAnIdea = async (req: Request,res:Response)=>{
+export const dislikeAnIdea = async (req: Request,res:Response)=>{
     try{
-        const id = req.query.id;
+        const id = req.params['ideaId'];
         const idea = await Idea.findByIdAndUpdate(id,{ $inc : {likes : -1}});
         res.status(201).json(idea);
 
@@ -102,12 +110,7 @@ export const findARandomIdea = async (req: Request,res:Response)=>{
 
 
 
-interface CommentReqBody{
-    userName:string,
-    ideaId:string,
-    message:string,
-    parentId?:string
-}
+
 
 export const addAComment = async (req:Request,res:Response)=>{
     try{

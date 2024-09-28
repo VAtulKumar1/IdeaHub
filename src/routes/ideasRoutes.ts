@@ -4,6 +4,7 @@ import {
     getLatestIdeas, 
     getOldestIdeas, 
     likeAnIdea,
+    dislikeAnIdea,
     getPopularIdeas,
     findARandomIdea,
     addAComment,
@@ -20,7 +21,8 @@ export const routes = express.Router();
 routes.post('/post',authorize,postIdea);
 routes.get('/ideas/latest',authorize,getLatestIdeas);
 routes.get('/ideas/oldest',authorize,getOldestIdeas);
-routes.patch('/like',authorize,likeAnIdea);
+routes.patch('/like/:ideaId',authorize,likeAnIdea);
+routes.patch('/like/:ideaId',authorize,dislikeAnIdea);
 routes.get('/ideas/popular',authorize,getPopularIdeas);
 routes.get('/random',authorize,findARandomIdea);
 routes.post('/comment',authorize,addAComment);
