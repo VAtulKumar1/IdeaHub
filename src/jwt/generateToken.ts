@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
+import configurations from "../config/getConfig";
 
 
-const generateToken = (userName:string)=>{
+const generateToken = (userName:string,email:string,role:string)=>{
     const payload = {
-        userName : userName
+        userName,email,role
     }
-
-    const secret = process.env.TOKEN_SECRET_KEY as string;
+    const secret = configurations.tokenKey as string;
+    console.log(configurations);
     const options = {expiresIn:'6h'}
     return jwt.sign(payload,secret,options);
 }

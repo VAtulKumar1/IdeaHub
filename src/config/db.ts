@@ -1,4 +1,5 @@
 import mongoose, { ConnectOptions }  from "mongoose";
+import configurations  from "./getConfig";
 
 interface CustomConnectOptions extends ConnectOptions{
     useNewUrlParser? : boolean,
@@ -13,7 +14,7 @@ const options : CustomConnectOptions = {
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI as string, options);
+        await mongoose.connect(configurations.mongo_uri, options);
         console.log("MongoDB connected successfully.");
     } catch (error) {
         if( error instanceof Error){

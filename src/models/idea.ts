@@ -6,7 +6,7 @@ const ideaSchema  = new mongoose.Schema({
     description: { type:String, required:true,maxLength:1000},
     tag: {type:String,required:true,enum:["Beginer","Intermediate","Advanced"]},
     industry: { type:String, required:false,maxLength:80},
-    createdAt:{ type:Date, required:true},
+    createdAt:{ type:Date, required:true,default:Date.now()},
     likes : { type:Number, required:true},
 })
 

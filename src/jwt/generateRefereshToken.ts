@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
+import configurations from '../config/getConfig';
 
-const generateRefereshToken = (userName:String)=>{
+const generateRefereshToken = (userName:String,email:string,role:string)=>{
     const payload = {
-        userName
+        userName,email,role
     }
-    const secret = process.env.REFERESH_TOKEN_SECRET_KEY as string;
+    const secret = configurations.refereshTokenKey;
     const options = {
         expiresIn:'14d'
     }

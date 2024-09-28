@@ -2,10 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import connectDB from './config/db'
 import { routes } from './routes/ideasRoutes';
+import configurations from './config/getConfig';
 import cors from 'cors';
 
 const app = express();
-const port:string = process.env.PORT as string;
+const port:string = configurations.port;
 app.use(bodyParser);
 
 
