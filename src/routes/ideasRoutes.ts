@@ -5,7 +5,11 @@ import {
     getOldestIdeas, 
     likeAnIdea,
     getPopularIdeas,
-    findARandomIdea
+    findARandomIdea,
+    addAComment,
+    deleteAnIdea,
+    getAllCommentsOnAPost,
+    getCoversation
 
 } from '../controller/ideaController';
 import { login,refreshToken,register, updatePassword } from "../controller/userController";
@@ -19,10 +23,14 @@ routes.get('/ideas/oldest',authorize,getOldestIdeas);
 routes.patch('/like',authorize,likeAnIdea);
 routes.get('/ideas/popular',authorize,getPopularIdeas);
 routes.get('/random',authorize,findARandomIdea);
+routes.post('/comment',authorize,addAComment);
+routes.get('/comment/:ideaId',authorize,getAllCommentsOnAPost);
+routes.delete('/comment/:ideaId',authorize,deleteAnIdea);
+routes.get('/comment/coversation/:parentId',authorize,getCoversation);
 
 
 routes.post('/user/register',register);
 routes.post('/user/login',login);
 routes.post('/user/refresh/:id',refreshToken)
-routes.patch('/user/:id',updatePassword);
+routes.patch('/user/:id',authorize,updatePassword);
 

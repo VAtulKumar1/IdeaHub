@@ -5,8 +5,15 @@ import generateRefereshToken from '../jwt/generateRefereshToken';
 import { Request,Response } from 'express'
 import Token from '../models/refreshTokenSchema';
 
+
+interface RegisterReqBody{
+    userName:string,
+    email:string,
+    password:string 
+}
+
 export const register = async (req:Request,res:Response)=>{
-    const {userName,email,password} = req.body;
+    const {userName,email,password}:RegisterReqBody = req.body;
     try{
         const salt = await bcrypt.genSalt(8);
         const encryptedPassword =  await bcrypt.hash(password,salt);
@@ -88,10 +95,10 @@ export const login = async (req:Request,res:Response)=>{
 
 export const refreshToken = async (req:Request,res:Response)=>{
   
-    const header = req.get('Refresh-Token');
-    const refreshToken = header && header.split(' ')[1];
+    const header:string|undefined = req.get('Refresh-Token');
+    const refreshToken:string|undefined = header && header.split(' ')[1];
 
-    const userId = req.params['id'];
+    const userId:string  = req.params['id'];
 
     if(!(userId && refreshToken)){
         res.status(401).send("Please provide a valid refresh token")
@@ -117,7 +124,7 @@ export const refreshToken = async (req:Request,res:Response)=>{
 
 
 export const updatePassword = async (req:Request,res:Response)=>{
-    const userId = req.params['id'];
+    const userId:string = req.params['id'];
     const {currentPassword,newPassword} = req.body;
     if(!userId){
         res.status(401).send("Please provide a valid userId");

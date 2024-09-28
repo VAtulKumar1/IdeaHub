@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions } from "jsonwebtoken";
 import configurations from "../config/getConfig";
 
 
@@ -6,9 +6,9 @@ const generateToken = (userName:string,email:string,role:string)=>{
     const payload = {
         userName,email,role
     }
-    const secret = configurations.tokenKey as string;
-    console.log(configurations);
-    const options = {expiresIn:'6h'}
+    const secret:string = configurations.tokenKey;
+    const options:SignOptions = {expiresIn:'6h',algorithm:'HS256'};
+    
     return jwt.sign(payload,secret,options);
 }
 

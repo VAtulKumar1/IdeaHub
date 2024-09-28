@@ -1,20 +1,22 @@
 
 import { Request,Response } from 'express'
 import Idea from '../models/idea';
+import Comment from '../models/comments';
+
+
+interface Idea {
+    title:string, 
+    description:string,
+    tag:string,
+    industry:string
+}
 
 
 export const postIdea= async (req :Request , res: Response)=>{
 
     try{
-        const {title,description,tag,industry,createdAt} = req.body;
-        const idea = new Idea({
-            title,
-            description,
-            tag,
-            industry,
-            createdAt,
-            likes:0
-        })
+        const request:Idea = req.body;
+        const idea = new Idea(request);
         await idea.save();
         res.status(201).json(idea);
 
@@ -94,6 +96,90 @@ export const findARandomIdea = async (req: Request,res:Response)=>{
 
     }catch(error){
         console.log("some error occured")
+    }
+
+}
+
+
+
+interface CommentReqBody{
+    userName:string,
+    ideaId:string,
+    message:string,
+    parentId?:string
+}
+
+export const addAComment = async (req:Request,res:Response)=>{
+    try{
+        const request:CommentReqBody = req.body;
+        const comment = new Comment(request);
+        await comment.save();
+        return res.status(200).json(comment);
+        
+    }catch(error){
+        res.status(500).json(error);
+    }
+
+}
+
+export const getAllCommentsOnAPost = async (req:Request,res:Response)=>{
+    try{
+        const ideaId:string = req.params['ideaId'];
+        if(!ideaId){
+            res.status(401).json({
+                message:"Please provide an ideaId"
+            })
+        }
+        else{
+            const comments = await Comment.find({ideaId}).sort({createdAt:1});
+            res.status(200).json(comments);
+        }
+        
+
+    }catch(error){
+        res.status(500).json(error);
+    }
+
+}
+
+
+export const deleteAnIdea = async(req:Request,res:Response)=>{
+    try{
+        const ideaId:string = req.params['ideaId'];
+        if(!ideaId){
+            res.status(401).json({
+                message:"Please provide an ideaId"
+            });
+        }else{
+            await Idea.findByIdAndDelete({_id:ideaId});
+            res.status(200).json({
+                message:"Idea deleted succesfully"
+            })
+        }
+
+    }catch(error){
+        res.status(500).json(error);
+    }    
+}
+
+
+
+export const getCoversation = async (req:Request,res:Response)=>{
+    try{
+        const parentId:string = req.params['parentId'];
+        if(!parentId){
+            res.status(401).json({
+                message:"Please provide an parentId"
+            })
+        }
+        else{
+            const conversation = await Comment.find({parentId}).sort({createdAt:1});
+            res.status(200).json(conversation);
+        }
+        
+
+    }catch(error){
+        res.status(500).json(error);
     }
 
 }
