@@ -4,11 +4,13 @@ import connectDB from './config/db'
 import { routes } from './routes/ideasRoutes';
 import configurations from './config/getConfig';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 
 const app = express();
 const port:string = configurations.port;
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 const corsOptions = {
