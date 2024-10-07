@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import generateRefereshToken from "../jwt/generateRefereshToken";
 import { Request, Response } from "express";
 import Token from "../models/refreshTokenSchema";
+import { strict } from "assert";
 
 interface RegisterReqBody {
     userName: string;
@@ -85,13 +86,19 @@ export const login = async (req: Request, res: Response) => {
                 email,
                 "User"
             );
-            res.cookie("token", accessToken, { httpOnly: true });
-            res.cookie("refreshToken", refreshToken, { httpOnly: true });
+            res.cookie("token", accessToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+            });
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+            });
             res.status(200).json({
                 userName: user.userName,
                 _id: user._id,
-                accessToken,
-                refreshToken,
             });
             return;
         }
