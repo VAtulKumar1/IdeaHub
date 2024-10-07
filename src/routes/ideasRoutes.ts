@@ -29,7 +29,7 @@ routes
     .get("/ideas/latest", authorize, getLatestIdeas)
     .get("/ideas/oldest", authorize, getOldestIdeas)
     .patch("/like/:ideaId", authorize, likeAnIdea)
-    .patch("/like/:ideaId", authorize, dislikeAnIdea)
+    .patch("/dislike/:ideaId", authorize, dislikeAnIdea)
     .get("/ideas/popular", authorize, getPopularIdeas)
     .get("/random", authorize, findARandomIdea)
     .post("/comment", authorize, addAComment)
