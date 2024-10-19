@@ -54,6 +54,7 @@ export const register = async (req: Request, res: Response) => {
             userName: newUser.userName,
         };
         res.status(200).json(response);
+        return;
     } catch (error) {
         console.log({ message: "some error occured" });
     }

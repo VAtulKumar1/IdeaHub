@@ -25,19 +25,19 @@ export const routes = express.Router();
 routes.use(cookieParser());
 
 routes
-    .post("/post", authorize, postIdea)
-    .get("/ideas/latest", authorize, getLatestIdeas)
-    .get("/ideas/oldest", authorize, getOldestIdeas)
-    .patch("/like/:ideaId", authorize, likeAnIdea)
-    .patch("/dislike/:ideaId", authorize, dislikeAnIdea)
-    .get("/ideas/popular", authorize, getPopularIdeas)
-    .get("/random", authorize, findARandomIdea)
-    .post("/comment", authorize, addAComment)
-    .get("/comment/:ideaId", authorize, getAllCommentsOnAPost)
-    .delete("/comment/:ideaId", authorize, deleteAnIdea)
-    .get("/comment/coversation/:parentId", authorize, getCoversation)
+    .post("/post", postIdea)
+    .get("/ideas/latest", getLatestIdeas)
+    .get("/ideas/oldest", getOldestIdeas)
+    .patch("/like/:ideaId", likeAnIdea)
+    .patch("/dislike/:ideaId", dislikeAnIdea)
+    .get("/ideas/popular", getPopularIdeas)
+    .get("/random", findARandomIdea)
+    .post("/comment", addAComment)
+    .get("/comment/:ideaId", getAllCommentsOnAPost)
+    .delete("/comment/:ideaId", deleteAnIdea)
+    .get("/comment/coversation/:parentId", getCoversation)
 
     .post("/user/register", register)
     .post("/user/login", login)
     .post("/user/refresh/:id", refreshToken)
-    .patch("/user/:id", authorize, updatePassword);
+    .patch("/user/:id", updatePassword);
