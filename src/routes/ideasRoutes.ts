@@ -12,6 +12,8 @@ import {
     getAllCommentsOnAPost,
     getCoversation,
     addAComment,
+    getIdeaById,
+    getAllIdeas,
 } from "../controller/ideaController";
 import {
     login,
@@ -26,6 +28,8 @@ routes.use(cookieParser());
 
 routes
     .post("/post", postIdea)
+    .get("/ideas/all", getAllIdeas)
+    .get("/ideas/idea/:id", getIdeaById)
     .get("/ideas/latest", getLatestIdeas)
     .get("/ideas/oldest", getOldestIdeas)
     .patch("/like/:ideaId", likeAnIdea)

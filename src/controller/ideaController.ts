@@ -29,14 +29,30 @@ export const postIdea = async (req: Request, res: Response) => {
     }
 };
 
+export const getAllIdeas = async (req: Request, res: Response) => {
+    try {
+        const totalIdeas: number = await Idea.countDocuments();
+        const ideas = await Idea.find();
+        res.status(200).json({ ideas, totalIdeas });
+    } catch (error) {
+        res.status(400).send("some error occured");
+    }
+};
+
+export const getIdeaById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.query;
+        const idea = await Idea.findById(id);
+        res.status(200).json({ idea });
+    } catch (error) {
+        res.status(400).send("some error occured");
+    }
+};
+
 export const getLatestIdeas = async (req: Request, res: Response) => {
     try {
-        const { skip, limit } = req.query;
         const totalIdeas: number = await Idea.countDocuments();
-        const ideas = await Idea.find()
-            .sort({ createdAt: -1 })
-            .skip(Number(skip))
-            .limit(Number(limit));
+        const ideas = await Idea.find().sort({ createdAt: -1 });
         res.status(200).json({ ideas, totalIdeas });
     } catch (error) {
         res.status(400).send("some error occured");
@@ -45,12 +61,8 @@ export const getLatestIdeas = async (req: Request, res: Response) => {
 
 export const getOldestIdeas = async (req: Request, res: Response) => {
     try {
-        const { skip, limit } = req.query;
         const totalIdeas: number = await Idea.countDocuments();
-        const ideas = await Idea.find()
-            .sort({ createdAt: 1 })
-            .skip(Number(skip))
-            .limit(Number(limit));
+        const ideas = await Idea.find().sort({ createdAt: 1 });
         res.status(200).json({ ideas, totalIdeas });
     } catch (error) {
         res.status(400).send("some error occured");
@@ -79,12 +91,8 @@ export const dislikeAnIdea = async (req: Request, res: Response) => {
 
 export const getPopularIdeas = async (req: Request, res: Response) => {
     try {
-        const { skip, limit } = req.query;
         const totalIdeas: number = await Idea.countDocuments();
-        const ideas = await Idea.find()
-            .sort({ likes: -1 })
-            .skip(Number(skip))
-            .limit(Number(limit));
+        const ideas = await Idea.find().sort({ likes: -1 });
         res.status(201).json({ ideas, totalIdeas });
     } catch (error) {
         console.log("some error occured");
